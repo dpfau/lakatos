@@ -17,7 +17,7 @@ class PaperInThread(models.Model):
 	paper = models.ForeignKey(Paper)
 	thread = models.ForeignKey(Thread)
 	abbrev = models.CharField(max_length=60)
-	edge = models.ManyToManyField("self",through=EdgeInThread)
+	edge = models.ManyToManyField("self",through=EdgeInThread,symmetrical=False)
 
 class EdgeInThread(models.Model):
 	pass
