@@ -5,8 +5,7 @@ TEMPLATE_DEBUG = DEBUG
 
 ADMINS = (
      ('David Pfau', 'hotmail.com@gmail.com'),
-     ('Pia O''Neill', 'piakelsey@gmail.com'),
-     ('Jozsef Meszaros', 'joemesz@gmail.com')
+     ('Mariano Gabitto', 'mariano.gabitto@gmail.com'),
 )
 
 MANAGERS = ADMINS
@@ -126,6 +125,7 @@ INSTALLED_APPS = (
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
     'polls',
+    'simplebib'
 )
 
 # A sample logging configuration. The only tangible logging
