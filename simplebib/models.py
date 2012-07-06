@@ -51,9 +51,9 @@ class Node(models.Model):
  	children = models.ManyToManyField("self", through='Edge', symmetrical=False)
  	def __unicode__(self):
  		if self.abbrev is not None:
-	 		return self.abbrev
+	 		return thread.__unicode__() + ': ' + self.abbrev
 	 	else:
-	 		return paper.__unicode__()
+	 		return thread.__unicode__() + ': ' + paper.__unicode__()
  	# A thought: as defined, this allows us to draw and edge between papers in different threads.  Is that right?
 
 class Edge(models.Model):
