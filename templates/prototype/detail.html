@@ -1,0 +1,23 @@
+<html>
+	{% if thread %}
+	<head>
+		<title>Lakatos: {{ thread.title }}</title>
+	</head>
+	<body>
+		<h1> {{ thread.title }} </h1>
+		<ul>
+		<!-- Should include message if there are no papers -->
+		{% for paper in thread.papers.all %}
+			<li> {{ paper.full_title }} </li>
+		{% endfor %}
+		</ul>
+	</body>
+	{% else %}
+	<head>
+		<title>Lakatos</title>
+	</head>
+	<body>
+		No thread with that name found.  Would you like to create it?
+	</body>
+	{% endif %}
+</html>

@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>Lakatos</title>
+	</head>
+	<body>
+		<h1>Welcome to Lakatos!</h1>
+		{% if thread_list %}
+		<h2>View a thread:</h2>
+		<ul>
+			{% for thread in thread_list %}
+			<li><a href="/prototype/{{ thread.title }}/">{{ thread.title }}</a></li>
+			{% endfor %}
+		</ul>
+		{% else %}
+		<p>No threads available</p>
+		{% endif %}
+		<h2>Create a thread:</h2>
+		{% csrf_token %}
+		<form action="/prototype/create/" method="post">
+			<input type="text" name="new_thread_name">
+			<input type="submit" value="Create" />
+		</form>
+	</body>
+</html>

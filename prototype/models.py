@@ -13,7 +13,11 @@ class Paper(models.Model):
  	pub_date = models.DateField()
 
  	def full_title(self):
- 		ref = ', '.join([author.__unicode__() for author in self.authors.all()])
+ 		authorQuery = self.authors.all()
+ 		if len(authorQuery) is 0:
+ 			ref = 'Anonymous'
+ 		else: 
+ 			ref = ', '.join([author.__unicode__() for author in self.authors.all()])
  		if self.pub_date is not None:
 	 		ref += ' (' + str(self.pub_date.year) + '). ' 
 	 	else:
@@ -39,10 +43,10 @@ class Paper(models.Model):
 		return ref
 
 class Thread(models.Model):
-	title = models.CharField(max_length=200)
+	title = models.CharField(max_length=200, primary_key=True)
  	papers = models.ManyToManyField(Paper, through='Node')
  	def __unicode__(self):
- 		return self.title
+ 		return self.title.replace('_', ' ')
 
 class Node(models.Model):
  	paper = models.ForeignKey(Paper)
