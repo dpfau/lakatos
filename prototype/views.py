@@ -33,4 +33,9 @@ def create(request):
 	 		return render_to_response('prototype/index.html', 
 	 			{'thread_list': thread_list, 'thread_exists': 'Thread with that name exists'}, 
 	 			context_instance=RequestContext(request))
-	# return render_to_response('prototype/create.html', {'new_thread_name': new_thread_name}, context_instance=RequestContext(request))
+
+def paper(request, paper_id):
+	pass
+
+def author(request, author_name):
+	pass

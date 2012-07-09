@@ -1,3 +1,5 @@
+{% load prototype_tags %}
+
 <html>
 	<head>
 		<title>Lakatos</title>
@@ -8,7 +10,7 @@
 		<h2>View a thread:</h2>
 		<ul>
 			{% for thread in thread_list %}
-			<li><a href="/prototype/thread/{{ thread.title }}/">{{ thread.title }}</a></li>
+			<li><a href="/prototype/thread/{{ thread.title }}/">{{ thread.title|clean }}</a></li>
 			{% endfor %}
 		</ul>
 		{% else %}

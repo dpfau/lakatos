@@ -1,10 +1,12 @@
+{% load prototype_tags %}
+
 <html>
 	{% if thread %}
 	<head>
-		<title>Lakatos: {{ thread.title }}</title>
+		<title>Lakatos: {{ thread.title|clean }}</title>
 	</head>
 	<body>
-		<h1> {{ thread.title }} </h1>
+		<h1> {{ thread.title|clean }} </h1>
 		{% if thread.papers.all %}
 		<ul>
 		<!-- Should include message if there are no papers -->
