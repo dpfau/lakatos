@@ -5,12 +5,16 @@
 	</head>
 	<body>
 		<h1> {{ thread.title }} </h1>
+		{% if thread.papers.all %}
 		<ul>
 		<!-- Should include message if there are no papers -->
 		{% for paper in thread.papers.all %}
 			<li> {{ paper.full_title }} </li>
 		{% endfor %}
 		</ul>
+		{% else %}
+		No papers in this thread yet!
+		{% endif %}
 	</body>
 	{% else %}
 	<head>
