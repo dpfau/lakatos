@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% load prototype_tags %}
+{% block content %}
+	{% if query %}
+		{% if documents %}
+			Search results for {{ query }}:
+			{% if thread %}
+				<form action="/prototype/add/{{ thread }}/" method="post">
+					{% csrf_token %}
+					{% for doc in documents %}
+						<input type="radio" name="uuid" id="{{ forloop.counter }}" value="{{ doc.uuid }}"/>
+						<label for="{{ forloop.counter }}" >{{ doc.full_title }}</label> </br>
+					{% endfor %}
+					<input type="submit" value="Add">
+				</form>
+			{% else %}
+				<ul>
+					{% for doc in documents %}
+						<li> {{ doc.full_title }} </li>
+					{% endfor %}
+				</ul>
+			{% endif %}
+		{% else %}
+			No search results for {{ query }}:
+		{% endif %}
+	{% else %}
+		<p> No query entered. </p>
+	{% endif %}
+	{% if thread %}
+		<p>
+			<a href="/prototype/thread/{{ thread }}">Back to {{ thread|clean }}</a>
+		</p>
+	{% endif %}
+	<a href="/prototype">home</a>
+{% endblock %}

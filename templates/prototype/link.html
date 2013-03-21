@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load prototype_tags %}
+{% block content %}
+	<form action="/prototype/link/" method="post">
+		{% csrf_token %}
+		{% for thread in threads %}
+				{% for node in thread.node_set.all %}
+					<input type="hidden" name="in_link" value="{{ in_link }}" />
+					<input type="radio" name="out_link" id="{{ node.pk }}{{ forloop.counter }}" value="{{ node.pk }}" />
+					<label> {{ node }} </label> </br>
+				{% endfor %}
+		{% endfor %}
+		<input type="text" name="comment" /> Add comment </br>
+		<input type="submit" value="Link" />
+	</form>
+{% endblock %}

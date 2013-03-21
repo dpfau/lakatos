@@ -1,29 +1,44 @@
+{% extends "base.html" %}
 {% load prototype_tags %}
-
-<html>
+{% block content %}
 	{% if thread %}
-	<head>
-		<title>Lakatos: {{ thread.title|clean }}</title>
-	</head>
-	<body>
 		<h1> {{ thread.title|clean }} </h1>
-		{% if thread.papers.all %}
-		<ul>
-		<!-- Should include message if there are no papers -->
-		{% for paper in thread.papers.all %}
-			<li> {{ paper.full_title }} </li>
-		{% endfor %}
-		</ul>
+		Search for papers to add:
+		<form action="/prototype/search/{{ thread.title }}/" method="post">
+			{% csrf_token %}
+			<input type="text" name="query" />
+			<input type="submit" value="Search" />
+		</form>
+		{% if thread.node_set.all %}
+			<ul>
+			{% for node in thread.node_set.all %}
+				<li> {{ node.paper.full_title }} <a href="/prototype/link/{{ node.pk }}">+</a> </li>
+				{% if node.out_links.all %}
+					<ul>
+					{% for edge in node.out_links.all %}
+						<li> 
+							<form id="create" method="post" action="/prototype/clear/edge/">
+								{% csrf_token %}
+								<a href="/prototype/thread/{{ edge.child.thread.title }}/">{{ edge.child.paper }}</a>: {{ edge.comment }}
+								<input type="hidden" name="edge" value="{{ edge.pk }}" />
+								<a onclick="document.getElementById('create').submit();" href="#">-</a> 
+							</form>
+						</li>
+					{% endfor %}
+					</ul>
+				{% endif %}
+			{% endfor %}
+			</ul>
 		{% else %}
-		No papers in this thread yet!
+			<p> No papers in this thread yet! </p>
 		{% endif %}
-	</body>
 	{% else %}
-	<head>
-		<title>Lakatos</title>
-	</head>
-	<body>
-		No thread with that name found.  Would you like to create it?
-	</body>
+		No thread with that name found.
+		<form id="create" method="post" action="/prototype/thread/">
+			{% csrf_token %}
+			<input type="hidden" name="new_thread_name" value="{{ title }}" />
+			<a onclick="document.getElementById('create').submit();" href="#">Create it.</a> 
+		</form>
 	{% endif %}
-</html>
+	<p> <a href="/prototype/">Home</a> </p>
+{% endblock %}

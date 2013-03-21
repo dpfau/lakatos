@@ -1,31 +1,33 @@
+{% extends "base.html" %}
 {% load prototype_tags %}
-
-<html>
-	<head>
-		<title>Lakatos</title>
-	</head>
-	<body>
-		<h1>Welcome to Lakatos!</h1>
-		{% if thread_list %}
+{% block content %}
+	<h1>Welcome to Lakatos!</h1>
+	{% if thread_list %}
 		<h2>View a thread:</h2>
 		<ul>
 			{% for thread in thread_list %}
-			<li><a href="/prototype/thread/{{ thread.title }}/">{{ thread.title|clean }}</a></li>
+				<li><a href="/prototype/thread/{{ thread.title }}/">{{ thread.title|clean }}</a></li>
 			{% endfor %}
 		</ul>
-		{% else %}
+	{% else %}
 		<p>No threads available</p>
-		{% endif %}
-		<h2>Create a thread:</h2>
-		<form action="/prototype/create/" method="post">
-			{% csrf_token %}
-			<input type="text" name="new_thread_name">
-			<input type="submit" value="Create" />
-		</form>
-		{% if thread_exists %} <!-- This seems like the sort of thing that can be replaced by Ajax later -->
+	{% endif %}
+	<h2>Create a thread:</h2>
+	<form class="form-search" action="/prototype/thread/" method="post">
+		{% csrf_token %}
+		<input type="text" class="input-large search-query"name="new_thread_name" />
+		<button type="submit" class="btn btn-primary">Create</button>
+		<script> mixpanel.track("Test");</script>
+	</form>
+	{% if thread_exists %} <!-- This seems like the sort of thing that can be replaced by Ajax later -->
 
-		{{ thread_exists }}
+	{{ thread_exists }}
 
-		{% endif %}
-	</body>
-</html>
+	{% endif %}
+	<h2>Search for papers:</h2>
+	<form class="form-search" action="/prototype/search/" method="post">
+		{% csrf_token %}
+		<input type="text" class="input-large search-query" name="query" />
+		<button type="submit" class="btn btn-primary">Search</button>
+	</form>
+{% endblock %}
